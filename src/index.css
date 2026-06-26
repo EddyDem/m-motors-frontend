@@ -88,3 +88,10 @@ li {
   padding: 8px 0; 
   border-bottom: 1px solid #eee; 
 }
+
+/* Souscription */
+
+fieldset { 
+  border: 1px solid #ddd; 
+  border-radius: 6px; 
+}
