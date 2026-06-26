@@ -1,16 +1,34 @@
-# React + Vite
+# M-Motors — Application web (front-end)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface client de la refonte M-Motors : recherche de véhicules, espace client, dépôt et suivi de dossier, souscription LOA. Consomme l'API du dépôt `m-motors-backend`. Le back-office est dans l'admin Django (côté back).
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+React 19 + Vite - React Router - Axios (token JWT par intercepteur) - Sentry.
 
-## React Compiler
+## Ecrans
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Ecran | Route | Accès | EPIC |
+| --- | --- | --- | --- |
+| Catalogue | `/catalogue` | public | E1 |
+| Connexion / Inscription | `/login`, `/register` | public | E2 |
+| Profil | `/profil` | connecté | E2 |
+| Mes dossiers | `/dossiers` | connecté | E3 / E4 |
+| Souscription | `/souscription` | connecté | E5 |
 
-## Expanding the ESLint configuration
+Routes privées protégées par `RequireAuth` (redirige vers `/login`).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Lancer en local
+
+```bash
+npm install
+copy .env.example .env      # renseigner VITE_API_URL
+npm run dev
+```
+
+Scripts : `dev`, `build`, `preview`, `lint`. Variables : voir `.env.example`.
+
+## Git et branches
+
+- Dépôt public. `main` stable, alimentée par Pull Request.
+- Une branche par EPIC : `feature/E<n>-front-<sujet>`, commits `feat:`/`chore:`.
