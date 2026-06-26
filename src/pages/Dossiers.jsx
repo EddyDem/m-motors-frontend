@@ -28,10 +28,15 @@ export default function Dossiers() {
 
   // Crée un dossier puis rafraîchit la liste
   async function handleCreer() {
-    await creerDossier(type);
-    recharger();
+    setError(null);
+    try {
+      await creerDossier(type);
+      recharger();
+    } catch {
+      setError("Création du dossier impossible.");
+    }
   }
-
+  
   // Envoie une pièce
   async function handleUpload(dossierId, file) {
     if (!file) return;
