@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 import App from "./App.jsx";
 import "./index.css";
+import { AuthProvider } from "./auth/AuthContext.jsx";
 
 // Surveillance des erreurs (si DSN fourni)
 if (import.meta.env.VITE_SENTRY_DSN) {
@@ -14,7 +15,9 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

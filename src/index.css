@@ -67,3 +67,12 @@ input, select, button {
 button { cursor: pointer; }
 
 [role="alert"] { color: #b00020; }
+
+/* Formulaire connexion, inscription, profil */
+
+form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  max-width: 360px; 
+}
