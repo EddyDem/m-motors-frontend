@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
-import apiClient, { setAccessToken } from "../api/client.js";
+import apiClient, { setAccessToken, setAuthHandlers } from "../api/client.js";
 import { AuthContext } from "./auth-context.js";
 
-
-// Fournit le token, le profil et les actions login/logout à toute l'app.
 export function AuthProvider({ children }) {
-  // Token initialisé depuis localStorage pour garder la session après un rechargement.
   const [token, setToken] = useState(() => localStorage.getItem("access"));
   const [user, setUser] = useState(null);
-  
-  // À chaque changement de token : on l'injecte dans axios, on le persiste,
-  // et on récupère le profil (/me/). Token invalide => déconnexion
+
+  // Rafraichit le token d'accès à partir du refresh stocké
+  async function refresh() {
+    const refreshToken = localStorage.getItem("refresh");
+    if (!refreshToken) throw new Error("Pas de refresh token");
+    const r = await apiClient.post("/auth/refresh/", { refresh: refreshToken });
+    localStorage.setItem("access", r.data.access);
+    setToken(r.data.access);
+    return r.data.access;
+  }
+
+  // Branche les callbacks utilisés par l'intercepteur axios
+  useEffect(() => {
+    setAuthHandlers({ refresh, logout });
+  }, []);
+
   useEffect(() => {
     setAccessToken(token);
     async function loadProfil() {
@@ -30,13 +40,14 @@ export function AuthProvider({ children }) {
     loadProfil();
   }, [token]);
 
-  // Connexion : récupère le token d'accès JWT et le stocke
   async function login(email, password) {
     const r = await apiClient.post("/auth/login/", { email, password });
+    localStorage.setItem("refresh", r.data.refresh);
     setToken(r.data.access);
   }
 
   function logout() {
+    localStorage.removeItem("refresh");
     setToken(null);
   }
 
