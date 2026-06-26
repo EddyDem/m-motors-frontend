@@ -6,6 +6,7 @@ import Catalogue from "./pages/Catalogue.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Profil from "./pages/Profil.jsx";
+import Dossiers from "./pages/Dossiers.jsx";
 
 export default function App() {
   const { user, logout } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
           {/* Liens selon l'etat de connexion */}
           {user ? (
             <>
+              <Link to="/dossiers">Mes dossiers</Link>
               <Link to="/profil">Profil</Link>
               <button onClick={logout}>Déconnexion</button>
             </>
@@ -37,6 +39,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profil" element={<RequireAuth><Profil key={user?.id} /></RequireAuth>} />
+          <Route path="/dossiers" element={<RequireAuth><Dossiers /></RequireAuth>} />
         </Routes>
       </main>
     </div>
