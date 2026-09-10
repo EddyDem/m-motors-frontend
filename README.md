@@ -1,5 +1,9 @@
 # M-Motors — Application web (front-end)
 
+## Contexte
+
+Projet scolaire conservé comme référence historique. Ce dépôt contient l'interface React/Vite de M-Motors: catalogue de véhicules, compte client, dossiers et parcours de souscription. Il est associé à l'[API M-Motors](https://github.com/EddyDem/m-motors-backend).
+
 Interface client de la refonte M-Motors : recherche de véhicules, espace client, dépôt et suivi de dossier, souscription LOA. Consomme l'API du dépôt `m-motors-backend`. Le back-office est dans l'admin Django (côté back).
 
 ## Stack
